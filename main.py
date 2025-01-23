@@ -21,8 +21,11 @@ while (1):
     #deposito
     if (selecao_usuario == 1):
         valor_deposito = int(input("Digite o valor que deseja depositar: "))
-        saldo += valor_deposito
-        print("Voce depositou R$ %.2f.\n", valor_deposito)
+        if (valor_deposito > 0):
+            saldo += valor_deposito
+            print("Voce depositou R$ %.2f.\n", valor_deposito)
+        else:
+            print("Valor inserido invalido.")
     #saque
     elif (selecao_usuario == 2):
         if (saques_efetuados < LIMITE_SAQUES_DIARIO):
