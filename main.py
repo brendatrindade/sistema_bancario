@@ -1,12 +1,11 @@
 menu = """
-
 ------------Menu------------
 
 (1) - Depositar
 (2) - Sacar
 (3) - Visualizar Extrato
+(4) - Visualizar Saldo
 (0) - Sair
-
 """
 saldo = 0
 limite = 500
@@ -26,9 +25,9 @@ while (1):
             depositos_efetuados += 1
             key_deposito = (f"deposito {depositos_efetuados}")
             extrato.update({key_deposito: valor_deposito})
-            print("Voce depositou R$ %.2f \n" % valor_deposito)
+            print("\nVoce depositou R$ %.2f \n" % valor_deposito)
         else:
-            print("Valor inserido invalido.")
+            print("\nValor inserido invalido.\n")
     #saque
     elif (selecao_usuario == 2):
         if (saques_efetuados < LIMITE_SAQUES_DIARIO):
@@ -39,22 +38,25 @@ while (1):
                     saques_efetuados +=1
                     key = (f"saque {saques_efetuados}")
                     extrato.update({key: valor_saque})
-                    print("Voce sacou R$ %.2f \n" % valor_saque)
+                    print("\nVoce sacou R$ %.2f \n" % valor_saque)
                 else:
-                    print("Saldo insuficiente.\n")
+                    print("\nSaldo insuficiente.\n")
             else:
-                print("Valor inserido maior que o limite. \n")
+                print("\nValor inserido maior que o limite. \n")
         else:
-            print("Limite diario de saques atingido.\n")
+            print("\nLimite diario de saques atingido.\n")
     #extrato
     elif (selecao_usuario == 3):
-        print("Extrato das operações realizadas recentemente: \n")
-        print(extrato)
+        print("\nExtrato das operações realizadas recentemente: \n")
+        for k in extrato:
+            print(k + ": R$ %.2f \n" % extrato.get(k))
+        print("Saldo disponivel: R$ %.2f\n" % saldo)
+    #saldo
+    elif (selecao_usuario == 4):
+        print("\nSaldo disponivel: R$ %.2f\n" % saldo)
     #sair
     elif (selecao_usuario == 0):
-        print("Agradecemos por utilizar nossos serviços. Ate a proxima! \n")
+        print("\nAgradecemos por utilizar nossos serviços. Ate a proxima! \n")
         break
     else:
-        print("Numero inserido invalido. Tente novamente \n")
-
-    
+        print("\nNumero inserido invalido. Tente novamente \n")
