@@ -1,8 +1,6 @@
 menu = """
 
-----Olá! Seja bem-vindo(a)----
-
-Pressione:
+------------Menu------------
 
 (1) - Depositar
 (2) - Sacar
@@ -17,6 +15,7 @@ LIMITE_SAQUES_DIARIO = 3
 extrato = {}
 
 while (1):
+    print(menu)
     selecao_usuario = int(input("Digite o numero da operacao que deseja realizar: "))
     #deposito
     if (selecao_usuario == 1):
@@ -39,10 +38,15 @@ while (1):
                 else:
                     print("Saldo insuficiente.\n")
             else:
-                print("Valor inserido maior que o limite.\n")
+                print("Valor inserido maior que o limite. \n")
         else:
             print("Limite diario de saques atingido. \n")
     # elif (selecao_usuario == 3):
-    # elif (selecao_usuario == 0):
-    # else:
+    #sair
+    elif (selecao_usuario == 0):
+        print("Agradecemos por utilizar nossos serviços. Ate a proxima! \n")
+        break
+    else:
+        print("Numero inserido invalido. Tente novamente \n")
+
     
