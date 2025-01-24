@@ -11,6 +11,7 @@ menu = """
 saldo = 0
 limite = 500
 saques_efetuados = 0
+depositos_efetuados = 0
 LIMITE_SAQUES_DIARIO = 3
 extrato = {}
 
@@ -22,7 +23,10 @@ while (1):
         valor_deposito = int(input("Digite o valor que deseja depositar: "))
         if (valor_deposito > 0):
             saldo += valor_deposito
-            print("Voce depositou R$ %.2f.\n", valor_deposito)
+            depositos_efetuados += 1
+            key_deposito = (f"deposito {depositos_efetuados}")
+            extrato.update({key_deposito: valor_deposito})
+            print("Voce depositou R$ %.2f \n" % valor_deposito)
         else:
             print("Valor inserido invalido.")
     #saque
@@ -35,13 +39,17 @@ while (1):
                     saques_efetuados +=1
                     key = (f"saque {saques_efetuados}")
                     extrato.update({key: valor_saque})
+                    print("Voce sacou R$ %.2f \n" % valor_saque)
                 else:
                     print("Saldo insuficiente.\n")
             else:
                 print("Valor inserido maior que o limite. \n")
         else:
-            print("Limite diario de saques atingido. \n")
-    # elif (selecao_usuario == 3):
+            print("Limite diario de saques atingido.\n")
+    #extrato
+    elif (selecao_usuario == 3):
+        print("Extrato das operações realizadas recentemente: \n")
+        print(extrato)
     #sair
     elif (selecao_usuario == 0):
         print("Agradecemos por utilizar nossos serviços. Ate a proxima! \n")
