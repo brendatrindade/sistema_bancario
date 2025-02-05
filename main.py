@@ -5,6 +5,7 @@ menu = """
 (2) - Sacar
 (3) - Visualizar Extrato
 (4) - Visualizar Saldo
+(5) - Cadastrar
 (0) - Sair
 """
 saldo = 0
@@ -13,6 +14,24 @@ saques_efetuados = 0
 depositos_efetuados = 0
 LIMITE_SAQUES_DIARIO = 3
 extrato = {}
+usuarios = {}
+
+def cadastrar_usuario(usuarios):
+    print("----------Cadastro----------\n")
+    cpf = input("Digite o seu CPF (apenas numeros): ")
+    if not(cpf in usuarios):
+        nome = input("Nome completo: ")
+        data_nascimento = input("Data de nascimento (dd/mm/aaaa): ")
+        telefone = input("Telefone: ")
+        logradouro = input("------Endereco------\nLogradouro: ")
+        numero = input("Numero: ")
+        cidade = input("Cidade: ")
+        sigla_estado = input("Sigla do Estado: ")
+        usuarios.update({cpf: {"nome": nome.title(),  "data de nascimento": data_nascimento, "telefone": telefone, "endereco": {"logradouro": logradouro.title(), "numero": numero, "cidade/estado": (f"{cidade.title()}/{sigla_estado.upper()}")} }})
+
+        print(f'Cadastro efetuado com sucesso!\n Nome: {(usuarios[cpf]["nome"])} - CPF: {cpf}\n')
+    else:
+        print("CPF ja cadastrado")
 
 def depositar(saldo_conta, depositos_efetuados, extrato_conta, /):
     valor_deposito = int(input("Digite o valor que deseja depositar: "))
@@ -74,6 +93,9 @@ while (1):
     elif (selecao_usuario == 4):
         exibir_saldo(saldo)
 
+    #cadastro
+    elif (selecao_usuario == 5):
+        cadastrar_usuario(usuarios)
     #sair
     elif (selecao_usuario == 0):
         print("\nAgradecemos por utilizar nossos serviços. Ate a proxima! \n")
