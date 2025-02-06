@@ -5,7 +5,9 @@ menu = """
 (2) - Sacar
 (3) - Visualizar Extrato
 (4) - Visualizar Saldo
-(5) - Cadastrar
+(5) - Cadastrar Cliente
+(6) - Cadastrar Conta
+(7) - Consultar Contas Cadastradas
 (0) - Sair
 """
 saldo = 0
@@ -15,6 +17,10 @@ depositos_efetuados = 0
 LIMITE_SAQUES_DIARIO = 3
 extrato = {}
 usuarios = {}
+contas = {}
+AGENCIA = "0001"
+
+num_conta = 0
 
 def cadastrar_usuario(usuarios):
     print("----------Cadastro----------\n")
@@ -27,11 +33,44 @@ def cadastrar_usuario(usuarios):
         numero = input("Numero: ")
         cidade = input("Cidade: ")
         sigla_estado = input("Sigla do Estado: ")
-        usuarios.update({cpf: {"nome": nome.title(),  "data de nascimento": data_nascimento, "telefone": telefone, "endereco": {"logradouro": logradouro.title(), "numero": numero, "cidade/estado": (f"{cidade.title()}/{sigla_estado.upper()}")} }})
+        usuarios.update({cpf: {
+            "nome": nome.title(),  
+            "data de nascimento": data_nascimento, 
+            "telefone": telefone, 
+            "endereco": {
+                "logradouro": logradouro.title(), 
+                "numero": numero, 
+                "cidade/estado": (f"{cidade.title()}/{sigla_estado.upper()}")} }})
 
-        print(f'Cadastro efetuado com sucesso!\n Nome: {(usuarios[cpf]["nome"])} - CPF: {cpf}\n')
+        print(f'Cadastro efetuado com sucesso!\nNome: {usuarios[cpf]["nome"]} - CPF: {cpf}\n')
     else:
         print("CPF ja cadastrado")
+
+def cadastrar_conta(contas):
+    global num_conta
+    print("----Cadastrar Nova Conta----\n")
+    cpf = input("Digite o seu CPF (apenas numeros): ")
+
+    if (cpf in usuarios.keys()):
+        num_conta += 1
+        conta= (f"000.00{num_conta}")
+
+        if cpf in contas.keys():
+            contas[cpf]["numero da conta"].append(conta)
+        else:
+            contas.update( {cpf: {
+            "agencia": AGENCIA, 
+            "numero da conta": [conta], 
+            "titular": usuarios[cpf]["nome"] }})
+
+        print(f'Conta criada com sucesso!\n Titular: {contas[cpf]["titular"]} - CPF: {cpf} \nAgencia: {AGENCIA} - Numero da Conta: {contas[cpf]["numero da conta"]}')
+    else:
+        print("CPF nao cadastrado, cadastre-se para criar uma conta")
+
+def visualizar_contas(contas):
+    cpf = input("Digite o seu CPF (apenas numeros): ")
+    print("-------Contas Cadastradas-------\n")
+    print(f'Titular: {(contas[cpf]["titular"])} - CPF: {cpf} \nAgencia: {AGENCIA} - Numero da Conta: {contas[cpf]["numero da conta"]}')
 
 def depositar(saldo_conta, depositos_efetuados, extrato_conta, /):
     valor_deposito = int(input("Digite o valor que deseja depositar: "))
@@ -93,9 +132,15 @@ while (1):
     elif (selecao_usuario == 4):
         exibir_saldo(saldo)
 
-    #cadastro
+    #cadastro cliente
     elif (selecao_usuario == 5):
         cadastrar_usuario(usuarios)
+    #cadastro conta
+    elif (selecao_usuario == 6):
+        cadastrar_conta(contas)
+    #visualizar contas cadastradas
+    elif (selecao_usuario == 7):
+        visualizar_contas(contas)
     #sair
     elif (selecao_usuario == 0):
         print("\nAgradecemos por utilizar nossos serviços. Ate a proxima! \n")
